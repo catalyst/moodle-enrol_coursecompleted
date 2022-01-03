@@ -22,7 +22,7 @@
  * @author    Renaat Debleu <info@eWallah.net>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace enrol_coursecompleted\privacy;
+namespace enrol_coursecompleted;
 
 defined('MOODLE_INTERNAL') || die();
 

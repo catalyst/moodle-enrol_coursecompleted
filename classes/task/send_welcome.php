@@ -53,12 +53,14 @@ class send_welcome extends \core\task\adhoc_task {
         if ($user = \core_user::get_user($data->userid)) {
             if ($course = $DB->get_field('course', 'fullname', ['id' => $data->courseid])) {
                 if ($complcourse = $DB->get_field('course', 'fullname', ['id' => $data->completedid])) {
+                    $url = new moodle_url('/course/view.php', ['id' => $data->courseid]);
+                    $url2 = new moodle_url('/course/view.php', ['id' => $data->completedid]);
                     $context = \context_course::instance($data->courseid);
                     $context2 = \context_course::instance($data->completedid);
                     $a = new stdClass();
-                    $a->coursename = format_string($course, true, ['context' => $context]);
+                    $a->coursename = html_writer::link($url, format_string($course, true, ['context' => $context]));
                     $a->profileurl = "$CFG->wwwroot/user/view.php?id=$user->id&course=$data->courseid";
-                    $a->completed = format_string($complcourse, true, ['context' => $context2]);
+                    $a->completed = html_writer::link($url2, format_string($complcourse, true, ['context' => $context2]));
                     $custom = $DB->get_field('enrol', 'customtext1', ['id' => $data->enrolid]);
                     $key = ['{$a->coursename}',  '{$a->completed}', '{$a->profileurl}', '{$a->fullname}', '{$a->email}'];
                     $value = [$a->coursename, $a->completed, $a->profileurl, fullname($user), $user->email];
